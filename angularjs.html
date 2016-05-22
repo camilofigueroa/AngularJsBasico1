@@ -25,6 +25,9 @@
 
     </div>
     
+    <!-- Aquí se incluye el otro archivo js par probar que el código se puede colocar en otro archivo  -->
+    <script src="js/ayudante.js"></script>
+    
     <script>
         
         var acumuladorApp = angular.module( 'acumuladorApp', [] );
@@ -62,6 +65,9 @@
                             
                             //Se agrega la longitud como parte del análisis.
                             cad += "  longitud caracteres: " + vector.length; 
+                            
+                            //Esta función proviene de otro archivo js.
+                            cad = retornar_algo( cad );
                             
                             //Esto sería equivalente al return.
                             $scope.informacion = cad;
