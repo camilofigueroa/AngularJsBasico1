@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html ng-app="acumuladorApp"><!--Hay que observar que aquí se inicia el ng-app-->
+<head>
+    <title>Ej de AngularJS</title>
+    <!-- Importar el js que se ha descargado del sitio de angular, no la última versión. -->
+    <script src="js/angular.min.js"></script>
+</head>
+<body>
+    
+    <!-- Este div se convierte en parte de la aplicación o del contexto de ese controlador -->
+    <div ng-controller="acumuladorAppCtrl">
+        
+        <p>
+            Esto{{ otracosa }}
+        </p>
+        
+    </div>
+    
+    <script>
+        
+        var acumuladorApp = angular.module( 'acumuladorApp', [] );
+        
+        acumuladorApp.controller( "acumuladorAppCtrl",
+            
+            //[ "$scope",  //Originalmente solo se minificaba el scope. Esta linea también funciona en lugar de la de abajo.
+            [ "$scope", "$http", //Esto es para minificar, pero interfiere con lo de php, hay que minificar las otras variables.
+             
+                function( $scope, $http )
+                {                    
+                    $scope.otracosa = "Esto se debe reflejar arriba en el div ng-controller.";
+                }
+            ] //Si se minifica, se deben minificar todas las llamadas inyecciones, de lo contrario mejor no minifique nada.
+        );
+        
+    </script>
+
+</body>
+</html>
