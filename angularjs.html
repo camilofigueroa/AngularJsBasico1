@@ -10,18 +10,10 @@
         
         <!-- Aquí se afecta desde el inicio el valor del texto -->
         <!-- <input type="text" ng-model="datos=0" ng-change="cargar_datos()"> -->
-        <input type="text" ng-model="datos" ng-change="cargar_datos()">
-        <input type="button" value="+" ng-click="sumar()"> 
+        <input type="text" ng-model="datos" ng-change="cargar_datos()"> 
         <br>
 
-        {{valor_texto}} <br>
-
         {{informacion}} <br>
-
-        <!--<div ng-repeat="datos in information">
-            {{datos.nombre}}
-        </div>-->
-
 
     </div>
     
@@ -36,36 +28,15 @@
              
                 function( $scope, $http )
                 {                    
-                    $scope.informacion = "Otr caos";
+                    $scope.informacion = "Aquí se inicializa información.";
 
-                    /*$scope.cargar_datos = function()
+                    $scope.cargar_datos = function()
                     {
                         if( $scope.datos != "" )
                         {
+                            //No se puede alterar el html tan fácil. Se puede alterar otro fragmento html desde acá.
                             $scope.informacion = $scope.datos + "<strong>Camilo Figueroa</strong>";
                         }
-                    };*/
-
-                    $scope.sumar = function()
-                    {
-                        var datos = $scope.datos;
-
-                        //En este punto, si el texto no tiene valores, el scope.datos parece no estar definido.
-                        console.log( "Entrando al código del evento click. " + $scope.datos );
-                        $scope.valor_texto = "je je";
-
-                        //Esta linea es importante porque afecta el texto en su valor sin tratar la propiedad value del componente.
-                        //$scope.datos = "Camilo"; //Parece ser que el modelo funciona globalmente de una forma menos específica.
-
-                        //$scope.datos = $scope.datos + 1; //Así lo que hace es concatenar.
-
-                        if( datos == "" || isNaN( datos ) )
-                        { 
-                            datos = 0; 
-                            console.log( "datos: " + datos ); 
-                        }
-
-                        $scope.datos = parseInt( datos ) + 1;
                     };
                 }
             ] //Si se minifica, se deben minificar todas las llamadas inyecciones, de lo contrario mejor no minifique nada.
