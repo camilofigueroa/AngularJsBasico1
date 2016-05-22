@@ -13,7 +13,15 @@
         <input type="text" ng-model="datos" ng-change="cargar_datos()"> 
         <br>
 
-        {{informacion}} <br>
+        <!-- El controlador afecta todo lo del div contenedor ng-controller, pero eso no significa que los
+        estilos convencionales no funcionen normalmente. Este estilo debería estar en un *.css -->
+        <div style="border: dashed 1px;">
+
+            {{informacion}}
+        
+        </div>
+        
+        <br>
 
     </div>
     
@@ -27,15 +35,19 @@
             [ "$scope", "$http", //Esto es para minificar, pero interfiere con lo de php, hay que minificar las otras variables.
              
                 function( $scope, $http )
-                {                    
+                {
+                    //Lo que aparece allá puede ser editado desde el exterior, como un cargue inicial.
                     $scope.informacion = "Aquí se inicializa información.";
 
+                    /**
+                     * El evento del texto es afectado por esta función, que en resumen actua al cambio instantaneo.
+                     */
                     $scope.cargar_datos = function()
                     {
                         if( $scope.datos != "" )
                         {
                             //No se puede alterar el html tan fácil. Se puede alterar otro fragmento html desde acá.
-                            $scope.informacion = $scope.datos + "<strong>Camilo Figueroa</strong>";
+                            $scope.informacion = $scope.datos + "\nCamilo Figueroa";
                         }
                     };
                 }
