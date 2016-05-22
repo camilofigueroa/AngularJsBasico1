@@ -36,6 +36,8 @@
              
                 function( $scope, $http )
                 {
+                                        
+                    
                     //Lo que aparece allá puede ser editado desde el exterior, como un cargue inicial.
                     $scope.informacion = "Aquí se inicializa información.";
 
@@ -44,10 +46,28 @@
                      */
                     $scope.cargar_datos = function()
                     {
-                        if( $scope.datos != "" )
-                        {
-                            //No se puede alterar el html tan fácil. Se puede alterar otro fragmento html desde acá.
-                            $scope.informacion = $scope.datos + "\nCamilo Figueroa";
+                        var cad = $scope.datos;
+                        var vector;
+                        
+                        if( cad != "" ) //Para realizar operaciones se revisa que la cadena digitada no sea vacía.
+                        {                            
+                            vector  = cad.split( "" ); //Separación de una cadena por corte en cada caracter. 
+                            cad = "";
+                            
+                            //Trabajando la concatenación de las partes en un pequeño análisis.
+                            for( var i = 0; i < vector.length; i ++ )
+                            {
+                                cad += vector[ i ] + ";";
+                            }
+                            
+                            //Se agrega la longitud como parte del análisis.
+                            cad += "  longitud caracteres: " + vector.length; 
+                            
+                            //Esto sería equivalente al return.
+                            $scope.informacion = cad;
+                            
+                            //Con esta línea y sin las demás se informaría si el número uno ha sido digitado
+                            //$scope.informacion = cad.indexOf( "1" );
                         }
                     };
                 }
