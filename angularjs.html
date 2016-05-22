@@ -2,22 +2,27 @@
 <html ng-app="acumuladorApp"><!--Hay que observar que aquí se inicia el ng-app-->
 <head>
     <title>Ej de AngularJS</title>
-    <!-- Importar el js que se ha descargado del sitio de angular, no la última versión. -->
     <script src="js/angular.min.js"></script>
 </head>
 <body>
     
-    <!-- Este div se convierte en parte de la aplicación o del contexto de ese controlador -->
-    <div ng-controller="acumuladorAppCtrl">
+    <div ng-controller="acumuladorAppCtrl"><!--Super importante el controlador aquí-->
         
-        <p>
-            Esto{{ otracosa }}
-        </p>
-        
-        <p>
-            Esto{{ otracosa }}
-        </p>
-        
+        <!-- Aquí se afecta desde el inicio el valor del texto -->
+        <!-- <input type="text" ng-model="datos=0" ng-change="cargar_datos()"> -->
+        <input type="text" ng-model="datos" ng-change="cargar_datos()">
+        <input type="button" value="+" ng-click="sumar()"> 
+        <br>
+
+        {{valor_texto}} <br>
+
+        {{informacion}} <br>
+
+        <!--<div ng-repeat="datos in information">
+            {{datos.nombre}}
+        </div>-->
+
+
     </div>
     
     <script>
@@ -26,12 +31,42 @@
         
         acumuladorApp.controller( "acumuladorAppCtrl",
             
-            //[ "$scope",  //Originalmente solo se minificaba el scope. Esta linea también funciona en lugar de la de abajo.
+            //[ "$scope",  //Originalmente solo se minificaba el scope.
             [ "$scope", "$http", //Esto es para minificar, pero interfiere con lo de php, hay que minificar las otras variables.
              
                 function( $scope, $http )
                 {                    
-                    $scope.otracosa = "Esto se debe reflejar arriba en el div ng-controller.";
+                    $scope.informacion = "Otr caos";
+
+                    /*$scope.cargar_datos = function()
+                    {
+                        if( $scope.datos != "" )
+                        {
+                            $scope.informacion = $scope.datos + "<strong>Camilo Figueroa</strong>";
+                        }
+                    };*/
+
+                    $scope.sumar = function()
+                    {
+                        var datos = $scope.datos;
+
+                        //En este punto, si el texto no tiene valores, el scope.datos parece no estar definido.
+                        console.log( "Entrando al código del evento click. " + $scope.datos );
+                        $scope.valor_texto = "je je";
+
+                        //Esta linea es importante porque afecta el texto en su valor sin tratar la propiedad value del componente.
+                        //$scope.datos = "Camilo"; //Parece ser que el modelo funciona globalmente de una forma menos específica.
+
+                        //$scope.datos = $scope.datos + 1; //Así lo que hace es concatenar.
+
+                        if( datos == "" || isNaN( datos ) )
+                        { 
+                            datos = 0; 
+                            console.log( "datos: " + datos ); 
+                        }
+
+                        $scope.datos = parseInt( datos ) + 1;
+                    };
                 }
             ] //Si se minifica, se deben minificar todas las llamadas inyecciones, de lo contrario mejor no minifique nada.
         );
@@ -40,3 +75,5 @@
 
 </body>
 </html>
+
+
