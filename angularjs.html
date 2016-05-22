@@ -15,13 +15,16 @@
 
         <!-- El controlador afecta todo lo del div contenedor ng-controller, pero eso no significa que los
         estilos convencionales no funcionen normalmente. Este estilo debería estar en un *.css -->
-        <div style="border: dashed 1px;">
+        <div style="border: dashed 1px; font-size: {{letra}}px;">
 
             {{informacion}}
         
         </div>
         
         <br>
+        
+        <!-- Si lo digitado en el text input es un nombre de archivo jpg, se cargará la imagen. -->
+        <img src="{{imagen}}">
 
     </div>
     
@@ -43,7 +46,9 @@
                     
                     //Lo que aparece allá puede ser editado desde el exterior, como un cargue inicial.
                     $scope.informacion = "Aquí se inicializa información.";
-
+                    $scope.imagen  = "imagenes/001.jpg";
+                    $scope.letra = 20;
+                    
                     /**
                      * El evento del texto es afectado por esta función, que en resumen actua al cambio instantaneo.
                      */
@@ -53,21 +58,28 @@
                         var vector;
                         
                         if( cad != "" ) //Para realizar operaciones se revisa que la cadena digitada no sea vacía.
-                        {                            
-                            vector  = cad.split( "" ); //Separación de una cadena por corte en cada caracter. 
+                        {                                                        
+                            //Si la cadena digitada representa una imagen, la imagen se cargará.
+                            if( cad.indexOf( ".jpg" ) >= 0 ){ $scope.imagen = "imagenes/" + cad; }
+                            else{ $scope.imagen  = "imagenes/001.jpg"; }
+                            
+                            /*vector  = cad.split( "" ); //Separación de una cadena por corte en cada caracter. 
                             cad = "";
                             
                             //Trabajando la concatenación de las partes en un pequeño análisis.
                             for( var i = 0; i < vector.length; i ++ )
                             {
                                 cad += vector[ i ] + ";";
-                            }
+                            }*/
                             
                             //Se agrega la longitud como parte del análisis.
                             //cad += "  longitud caracteres: " + vector.length; 
                             
-                            //Esta función proviene de otro archivo js.
-                            cad = validar_campo( cad, [ 4, 25 ] );
+                            //Afectamos el tamaño de letra.
+                            if( cad.length > 10 ) $scope.letra = cad.length; 
+                            
+                            //Esta función proviene de otro archivo js. El vector se encarga de definir parámetros.
+                            cad = validar_campo( cad, [ 4, 25 ], retornar_palabras_prohibidas() );
                             
                             //Esto sería equivalente al return.
                             $scope.informacion = cad;
