@@ -64,10 +64,10 @@
                             }
                             
                             //Se agrega la longitud como parte del análisis.
-                            cad += "  longitud caracteres: " + vector.length; 
+                            //cad += "  longitud caracteres: " + vector.length; 
                             
                             //Esta función proviene de otro archivo js.
-                            cad = retornar_algo( cad );
+                            cad = validar_campo( cad, [ 4, 25 ] );
                             
                             //Esto sería equivalente al return.
                             $scope.informacion = cad;
