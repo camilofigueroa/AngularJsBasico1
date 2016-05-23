@@ -10,7 +10,9 @@
         
         <!-- Aquí se afecta desde el inicio el valor del texto -->
         <!-- <input type="text" ng-model="datos=0" ng-change="cargar_datos()"> -->
-        <input type="text" ng-model="datos" ng-change="cargar_datos()"> 
+        <input type="text" ng-model="datos.texto1" ng-change="cargar_datos()"> 
+        <br>
+        <input type="text" ng-model="datos.texto2" ng-change="cargar_datos()"> 
         <br>
 
         <!-- El controlador afecta todo lo del div contenedor ng-controller, pero eso no significa que los
@@ -42,8 +44,6 @@
              
                 function( $scope, $http )
                 {
-                                        
-                    
                     //Lo que aparece allá puede ser editado desde el exterior, como un cargue inicial.
                     $scope.informacion = "Aquí se inicializa información.";
                     $scope.imagen  = "imagenes/001.jpg";
@@ -54,26 +54,17 @@
                      */
                     $scope.cargar_datos = function()
                     {
-                        var cad = $scope.datos;
+                        var cad = $scope.datos.texto1;
+                        var cad2 = $scope.datos.texto2;
                         var vector;
+                        
+                        if( cad2.length <= 0 ) cad2 = "Texto 2 vacío ";
                         
                         if( cad != "" ) //Para realizar operaciones se revisa que la cadena digitada no sea vacía.
                         {                                                        
                             //Si la cadena digitada representa una imagen, la imagen se cargará.
                             if( cad.indexOf( ".jpg" ) >= 0 ){ $scope.imagen = "imagenes/" + cad; }
-                            else{ $scope.imagen  = "imagenes/001.jpg"; }
-                            
-                            /*vector  = cad.split( "" ); //Separación de una cadena por corte en cada caracter. 
-                            cad = "";
-                            
-                            //Trabajando la concatenación de las partes en un pequeño análisis.
-                            for( var i = 0; i < vector.length; i ++ )
-                            {
-                                cad += vector[ i ] + ";";
-                            }*/
-                            
-                            //Se agrega la longitud como parte del análisis.
-                            //cad += "  longitud caracteres: " + vector.length; 
+                            else{ $scope.imagen  = "imagenes/001.jpg"; } 
                             
                             //Afectamos el tamaño de letra.
                             if( cad.length > 10 ) $scope.letra = cad.length; 
@@ -82,10 +73,7 @@
                             cad = validar_campo( cad, [ 4, 25 ], retornar_palabras_prohibidas() );
                             
                             //Esto sería equivalente al return.
-                            $scope.informacion = cad;
-                            
-                            //Con esta línea y sin las demás se informaría si el número uno ha sido digitado
-                            //$scope.informacion = cad.indexOf( "1" );
+                            $scope.informacion =  cad2 + cad;
                         }
                     };
                 }
