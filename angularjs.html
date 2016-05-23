@@ -27,6 +27,12 @@
         
         <!-- Si lo digitado en el text input es un nombre de archivo jpg, se cargará la imagen. -->
         <img src="{{imagen}}">
+        
+        <br>
+        
+        <div ng-repeat="x in campos">
+            {{ x.Nombres }} {{ x.Apellidos }}
+        </div>
 
     </div>
     
@@ -76,6 +82,17 @@
                             $scope.informacion =  cad2 + cad;
                         }
                     };
+                    
+                    //Aquí se hace el llamado a un php con conexión a MySQL.
+                    $http.get( 'llamado-php.php' ).success
+                    (
+                        function( response ) 
+                        { 
+                            console.log( response );
+                            $scope.campos = response.records;
+                            
+                        }
+                    );
                 }
             ] //Si se minifica, se deben minificar todas las llamadas inyecciones, de lo contrario mejor no minifique nada.
         );
