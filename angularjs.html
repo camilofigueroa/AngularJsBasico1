@@ -10,9 +10,9 @@
         
         <!-- Aquí se afecta desde el inicio el valor del texto -->
         <!-- <input type="text" ng-model="datos=0" ng-change="cargar_datos()"> -->
-        <input type="text" ng-model="datos.texto1" ng-change="cargar_datos()"> 
-        <br>
-        <input type="text" ng-model="datos.texto2" ng-change="cargar_datos()"> 
+        <!-- <input type="text" ng-model="datos.texto1" ng-change="cargar_datos()"> 
+        <br> -->
+        <input type="text" ng-model="datos.texto2" ng-change="cargar_datos_php()"> 
         <br>
 
         <!-- El controlador afecta todo lo del div contenedor ng-controller, pero eso no significa que los
@@ -30,8 +30,9 @@
         
         <br>
         
+        <!-- Esto es importante para que se escriban los resultados como un ciclo dependiendo de la info php MySQL -->
         <div ng-repeat="x in campos">
-            {{ x.Nombres }} {{ x.Apellidos }}
+            Alias: {{ x.Alias }} Nombre: {{ x.Nombres }} {{ x.Apellidos }}
         </div>
 
     </div>
@@ -83,16 +84,26 @@
                         }
                     };
                     
-                    //Aquí se hace el llamado a un php con conexión a MySQL.
-                    $http.get( 'llamado-php.php' ).success
-                    (
-                        function( response ) 
-                        { 
-                            console.log( response );
-                            $scope.campos = response.records;
-                            
-                        }
-                    );
+                    /**
+                     * Esta función se activa al usar el texto 2.
+                     */
+                    $scope.cargar_datos_php = function()
+                    {
+                        var cad2 = $scope.datos.texto2;
+                        
+                        if( cad2.length > 0 )
+                        {
+                            //Aquí se hace el llamado a un php con conexión a MySQL.
+                            $http.get( 'llamado-php.php?cadena=' + cad2 ).success
+                            (
+                                function( response ) 
+                                { 
+                                    console.log( response );
+                                    $scope.campos = response.records;            
+                                }
+                            );   
+                        }                    
+                    }
                 }
             ] //Si se minifica, se deben minificar todas las llamadas inyecciones, de lo contrario mejor no minifique nada.
         );
